@@ -1,38 +1,75 @@
-.app {
-  text-align: center;
-  font-family: 'Arial', sans-serif;
-  background: url('https://source.unsplash.com/1600x900/?sky') no-repeat center center;
-  background-size: cover;
-  color: white;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom, #4facfe, #00f2fe);
+  color: #fff;
 }
 
-.search-bar {
+.app {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.title-color {
+  color: black;
+} 
+
+.title {
+  font-size: 2.5em;
   margin-bottom: 20px;
 }
 
-.search-bar input {
-  padding: 10px;
-  width: 200px;
-  margin-right: 10px;
-}
-
-.search-bar button {
-  padding: 10px;
-  cursor: pointer;
-}
-
 .weather-display {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.weather-card {
   background: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 10px;
+  width: 300px;
   text-align: left;
 }
 
-.weather-display img {
+.weather-card h2 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+.weather-card h3 {
+  font-size: 3em;
+  margin: 10px 0;
+}
+
+.weather-details {
   margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.weather-forecast {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.forecast-day {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
 }

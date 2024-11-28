@@ -1,31 +1,35 @@
 import axios from 'axios';
 
-// Meteomatics credentials
-const username = 'georgebrowncollege_sousadosreis_luilsonmarcos';
-const password = 'Pp0boml34E';
-const BASE_URL = 'https://api.meteomatics.com';
+// Base URL for OpenWeatherMap API
+const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
+
+// Environment variable for API key
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 /**
- * Fetch weather data from Meteomatics API.
- * @param {string} endpoint - The specific endpoint for the weather data query.
- * @returns {object | null} - Weather data from Meteomatics API or null if there's an error.
+ * Fetch weather data for a given city.
+ * @param {string} city 
+ * @returns {object | null} 
  */
-export const fetchMeteomaticsWeather = async (endpoint) => {
+export const fetchWeather = async (city) => {
     try {
-        const url = `${BASE_URL}/${endpoint}`;
-        console.log('Fetching weather data from URL:', url); // Debugging log
+        if (!API_KEY) {
+            throw new Error('API key is missing. Please check your .env file.');
+        }
 
-        const response = await axios.get(url, {
-            auth: {
-                username: username,
-                password: password,
-            },
-        });
+        const url = `${BASE_URL}?q=${city}&appid=${API_KEY}`;
+        console.log('Fetching weather data from URL:', url); 
 
-        console.log('Weather data fetched successfully:', response.data); // Debugging log
-        return response.data; // Return the weather data
+        const response = await axios.get(url);
+
+        if (response.status !== 200) {
+            throw new Error(`Unexpected API response: ${response.status}`);
+        }
+
+        console.log('Weather data fetched successfully:', response.data); 
+        return response.data; 
     } catch (error) {
         console.error('Error fetching weather data:', error.message);
-        return null; // Return null if there's an error
+        return null; 
     }
 };

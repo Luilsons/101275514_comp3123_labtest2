@@ -1,31 +1,55 @@
-import React from 'react';
+import React from "react";
+import "./WeatherDisplay.css";
 
-function WeatherDisplay({ weatherData }) {
-    const {
-        name,
-        main: { temp, temp_min, temp_max, humidity },
-        weather,
-        wind,
-    } = weatherData;
+const WeatherDisplay = ({ weatherData, weeklyForecast }) => {
+  if (!weatherData) return null;
 
-    const temperature = Math.round(temp - 273.15); 
-    const minTemp = Math.round(temp_min - 273.15);
-    const maxTemp = Math.round(temp_max - 273.15);
+  const { name } = weatherData; // City name
+    const { temp, temp_min, temp_max, humidity } = weatherData.main; // Weather main data
+    const { description } = weatherData.weather[0]; // Weather description
+    const { speed } = weatherData.wind; // Wind speed
+    const { icon } = weatherData.weather[0]
 
-    return (
+    // Convert Kelvin to Celsius
+    const tempCelsius = (temp - 273.15).toFixed(1);
+    const tempMinCelsius = (temp_min - 273.15).toFixed(1);
+    const tempMaxCelsius = (temp_max - 273.15).toFixed(1);
+
+  return (
+    <div className="weather-container">
+        {/* Main Weather Box */}
         <div className="weather-display">
             <h2>{name}</h2>
-            <p>Temperature: {temperature}°C</p>
-            <p>Min: {minTemp}°C, Max: {maxTemp}°C</p>
-            <p>Condition: {weather[0].description}</p>
+            <div className="icon-container">
+                <h1>{Math.round(tempCelsius)}°C</h1>
+                <img 
+                    src={`https://openweathermap.org/img/wn/${icon}@2x.png`} 
+                    alt="weather_ion" 
+                    className="icon-img"
+                    />
+                    </div>
+                <p>{description}</p>
+            <p>Min: {Math.round(tempMinCelsius)}°C</p>
+            <p>Max: {Math.round(tempMaxCelsius)}°C</p>
             <p>Humidity: {humidity}%</p>
-            <p>Wind Speed: {wind.speed} m/s</p>
-            <img
-                src={`http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
-                alt="weather-icon"
-            />
+            <p>Wind Speed: {speed} m/s</p>
         </div>
-    );
-}
+
+        {/* Weekly Forecast Box */}
+        <div className="weather-forecast">
+            <h3>Weekly Forecast</h3>
+            <div className="forecast-grid">
+            {weeklyForecast.map((day, index) => (
+                <div key={index} className="forecast-day">
+                <p>{day.day}</p>
+                <h4>{day.temp}°C</h4>
+                <p>{day.condition}</p>
+                </div>
+            ))}
+            </div>
+        </div>
+    </div>
+  );
+};
 
 export default WeatherDisplay;
